@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ScalaJS Demo</title>
+    <meta charset="utf-8">
+    <style>
+        input, button, label {
+            margin: 5px;
+        }
+
+        #character, #width {
+            width: 30px;
+        }
+
+        #result {
+            font-family: monospace;
+        }
+
+        #perform {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="mainContent">
+    <label for="str">Text to left-pad:</label><br/>
+    <input type="text" id="str" value="yes"/><br/>
+    <label for="width">Width:</label><br/>
+    <input type="number" id="width" value="5"/><br/>
+    <label for="character">Character:</label><br/>
+    <input type="text" id="character" maxlength="1" value="*"/><br/>
+    <button type="button" id="perform">PERFORM HEAVY LEFT-PADDING OPERATION ON THE ENTERPRISE CLUSTER</button>
+    <br/>
+    <label>Result:</label><br/>
+    <label id="result"></label>
+</div>
+
+<script type="text/javascript" src="js/target/scala-2.11/demo-jsdeps.js"></script>
+<script type="text/javascript" src="js/target/scala-2.11/demo-fastopt.js"></script>
+<script type="text/javascript" src="js/target/scala-2.11/demo-launcher.js"></script>
+
+</body>
+</html>
