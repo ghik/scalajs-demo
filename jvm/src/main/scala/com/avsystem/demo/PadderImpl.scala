@@ -17,10 +17,10 @@ object PadderImpl extends Padder {
     delay(result, 2.seconds)
   }
 
-  def rightPad(text: String, width: Int, character: Char): Future[String] = {
-    val result = text + character.toString * ((width - text.length) max 0)
-    delay(result, 2.seconds)
-  }
+  //  def rightPad(text: String, width: Int, character: Char): Future[String] = {
+  //    val result = text + character.toString * ((width - text.length) max 0)
+  //    delay(result, 2.seconds)
+  //  }
 
   private val scheduler = Executors.newSingleThreadScheduledExecutor
 

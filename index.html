@@ -35,9 +35,36 @@
     <label id="result"></label>
 </div>
 
+<script type="text/javascript">
+
+    function Apple(type) {
+        this.type = type;
+        this.color = "red";
+    }
+
+    function createApple(type) {
+        return new Apple(type);
+    }
+
+</script>
+
 <script type="text/javascript" src="js/target/scala-2.11/demo-jsdeps.js"></script>
 <script type="text/javascript" src="js/target/scala-2.11/demo-fastopt.js"></script>
 <script type="text/javascript" src="js/target/scala-2.11/demo-launcher.js"></script>
+
+<script type="text/javascript">
+
+    com.avsystem.demo.Utils().echo("something");
+
+    var cat = new com.avsystem.demo.Cat(5);
+    console.log(cat.weight);
+    cat.meow();
+
+    var apple = new Apple("jonagold");
+    func(apple);
+    apple.thisFunc();
+
+</script>
 
 </body>
 </html>

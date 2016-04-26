@@ -9,10 +9,6 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js.JSApp
 import scala.util.{Failure, Success}
 
-/**
-  * Author: ghik
-  * Created: 25/04/16.
-  */
 object PadderClient extends JSApp {
   def main(): Unit = {
     val strInput = dom.document.getElementById("str").asInstanceOf[HTMLInputElement]
@@ -22,20 +18,28 @@ object PadderClient extends JSApp {
     val result = dom.document.getElementById("result").asInstanceOf[HTMLSpanElement]
 
     performButton.onclick = (ev: MouseEvent) => {
-      val leftPadder = AsRealRPC[Padder].asReal(AjaxRawRPC)
+      val text = strInput.value
+      val width = widthInput.valueAsNumber
+      val char = characterInput.value.charAt(0)
+
+      result.textContent = leftPad(text, width, char)
+    }
+
+    def leftPad(text: String, width: Int, character: Char): String =
+      character.toString * ((width - text.length) max 0) + text
+
+    def consultPadderServer(): Unit = {
+      val padder: Padder = AsRealRPC[Padder].asReal(AjaxRawRPC)
       result.textContent = "computing..."
 
       val text = strInput.value
       val width = widthInput.valueAsNumber
       val char = characterInput.value.charAt(0)
 
-      leftPadder.leftPad(text, width, char).onComplete {
+      padder.leftPad(text, width, char).onComplete {
         case Success(value) => result.textContent = value
         case Failure(cause) => dom.window.alert(cause.getMessage)
       }
     }
   }
-
-  private def leftPad(text: String, width: Int, character: Char): String =
-    character.toString * ((width - text.length) max 0) + text
 }
