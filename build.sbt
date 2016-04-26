@@ -60,7 +60,7 @@ lazy val demo = crossProject.in(file("."))
     jsDependencies ++= Seq(
       "org.webjars" % "jquery" % jqueryVersion / "jquery.js" minified "jquery.min.js"
     ),
-    mainClass in Compile := Some("com.avsystem.demo.Demo"),
+    mainClass in Compile := Some("com.avsystem.demo.PadderClient"),
     persistLauncher := true
   )
 

@@ -1,5 +1,6 @@
 package com.avsystem.demo
 
+import com.avsystem.demo.UPickleRPC._
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 import org.scalajs.dom.raw.{HTMLButtonElement, HTMLInputElement, HTMLSpanElement}
@@ -12,7 +13,7 @@ import scala.util.{Failure, Success}
   * Author: ghik
   * Created: 25/04/16.
   */
-object Demo extends JSApp {
+object PadderClient extends JSApp {
   def main(): Unit = {
     val strInput = dom.document.getElementById("str").asInstanceOf[HTMLInputElement]
     val widthInput = dom.document.getElementById("width").asInstanceOf[HTMLInputElement]
@@ -21,9 +22,14 @@ object Demo extends JSApp {
     val result = dom.document.getElementById("result").asInstanceOf[HTMLSpanElement]
 
     performButton.onclick = (ev: MouseEvent) => {
-      val leftPadder = UPickleRPC.AsRealRPC[Padder].asReal(AjaxRawRPC)
+      val leftPadder = AsRealRPC[Padder].asReal(AjaxRawRPC)
+      result.textContent = "computing..."
 
-      leftPadder.rightPad(strInput.value, widthInput.valueAsNumber, characterInput.value.charAt(0)).onComplete {
+      val text = strInput.value
+      val width = widthInput.valueAsNumber
+      val char = characterInput.value.charAt(0)
+
+      leftPadder.leftPad(text, width, char).onComplete {
         case Success(value) => result.textContent = value
         case Failure(cause) => dom.window.alert(cause.getMessage)
       }

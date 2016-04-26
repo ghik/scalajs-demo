@@ -15,19 +15,21 @@ object AjaxRawRPC extends RawRPC {
 
   import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
+  private def handleAjax(input: String): Future[String] =
+    Ajax.post("http://localhost:8080", InputData.str2ajax(input)).map(_.responseText)
+
   private def rawInvocationToJS(rpcName: String, argLists: List[List[Js.Value]]): Js.Value =
     Js.Obj("rpcName" -> Js.Str(rpcName), "argLists" -> Js.Arr(argLists.map(args => Js.Arr(args: _*)): _*))
 
   def call(rpcName: String, argLists: List[List[Js.Value]]): Future[Js.Value] = {
     val json = upickle.json.write(rawInvocationToJS(rpcName, argLists))
-    Ajax.post("http://localhost:8080", InputData.str2ajax(json))
-      .map { request =>
-        upickle.json.read(request.responseText) match {
-          case Js.Obj(("success", response: Js.Value)) => response
-          case Js.Obj(("failure", Js.Str(failureMsg))) =>
-            throw new Exception(failureMsg)
-        }
+    handleAjax(json).map { response =>
+      upickle.json.read(response) match {
+        case Js.Obj(("success", response: Js.Value)) => response
+        case Js.Obj(("failure", Js.Str(failureMsg))) =>
+          throw new Exception(failureMsg)
       }
+    }
   }
 
   def fire(rpcName: String, argLists: List[List[Js.Value]]) =
